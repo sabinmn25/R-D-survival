@@ -1,26 +1,37 @@
 # 과학 연구 쟁탈전 — 카오스 보드게임
 
-주사위를 굴려 연구를 먹고, 카오스 카드로 판을 뒤집는 2~4인 웹 보드게임.
+주사위를 굴려 연구를 먹고, 카오스 카드로 판을 뒤집는 2~4인 웹 보드게임입니다.
 
-## 폴더 구성
-- `index.html`, `css/`, `js/` — 게임 화면 (빌드 과정 없음, 그대로 올리면 됨)
-- `js/config.js` — Supabase 주소와 공개 키 (secret 키는 절대 넣지 않기)
-- `sql/supabase_setup.sql` — Supabase SQL Editor에서 한 번 실행하는 세팅 파일. 게임 규칙·판정이 전부 여기 있음
+## 파일 구성
 
-## Supabase에서 해야 할 것
-1. SQL Editor에 `sql/supabase_setup.sql` 전체를 붙여넣고 Run
-2. Authentication → Sign In / Providers → **Allow anonymous sign-ins** 켜기
+이 사이트는 빌드 과정이 필요 없는 정적 웹사이트입니다. GitHub Pages가 저장소 루트의 `index.html`을 그대로 배포합니다.
 
-## GitHub Pages 배포
-1. 이 폴더 안의 파일을 전부 저장소 최상위에 올리기
-2. 저장소 Settings → Pages → Source: **Deploy from a branch**, Branch: **main / (root)** → Save
-3. 1~2분 뒤 `https://<아이디>.github.io/<저장소 이름>/` 에서 열림
+- `index.html` — 페이지 화면과 앱 진입점
+- `app.js`, `net.js`, `config.js` — 게임 화면, 네트워크 및 설정
+- `style.css` — 화면 스타일
+- `supabase_setup.sql` — 온라인 멀티플레이용 데이터베이스 설정
+- `.github/workflows/pages.yml` — GitHub Pages 자동 배포
 
-## 밸런스 조정
-Supabase Table Editor의 `lab_config` 표에서 숫자를 고치면 다음 판부터 적용됩니다
-(라운드 수, 턴 제한 시간, 카오스 카드 등장 확률 등).
-카드 내용과 지도는 `sql/supabase_setup.sql`의 4번 구역을 고친 뒤 SQL을 다시 실행하면 됩니다.
+## 사이트 이용
 
-## 로컬 테스트
-첫 화면의 "인터넷 없이 한 기기로 해보기"는 브라우저 안에서 같은 SQL을 돌려 서버와 똑같은 규칙으로 판정합니다.
-파일을 더블클릭으로 열면 동작하지 않으니, 배포된 주소에서 열거나 `python3 -m http.server` 로 띄워서 여세요.
+배포 주소: https://sabinmn25.github.io/R-D-survival/
+
+GitHub Actions가 `main` 브랜치의 변경 사항을 자동 배포합니다. 첫 배포가 진행 중이면 저장소의 **Actions** 탭에서 `Deploy to GitHub Pages` 작업이 완료될 때까지 기다려 주세요.
+
+## 온라인 멀티플레이 설정
+
+온라인 방 만들기와 참가를 사용하려면 Supabase 설정이 필요합니다.
+
+1. `supabase_setup.sql` 내용을 Supabase 대시보드의 **SQL Editor**에 붙여넣고 실행합니다.
+2. Supabase의 **Authentication → Sign In / Providers**에서 익명 로그인을 허용합니다.
+3. `config.js`의 Supabase URL과 공개용 publishable/anon key가 프로젝트에 맞는지 확인합니다. `service_role` 같은 비밀 키는 절대 브라우저 코드에 넣지 않습니다.
+
+아래의 **인터넷 없이 한 기기로 해보기 (로컬 테스트)**는 브라우저에서 바로 시도할 수 있습니다.
+
+## 로컬 실행
+
+파일을 직접 더블클릭하면 브라우저 모듈과 SQL을 불러오지 못할 수 있습니다. Python이 설치되어 있다면 저장소 폴더에서 다음을 실행한 뒤 `http://localhost:8000`을 여세요.
+
+```bash
+python3 -m http.server
+```
