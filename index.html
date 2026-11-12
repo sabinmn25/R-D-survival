@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>과학 연구 쟁탈전 — 카오스 보드게임</title>
+  <meta name="description" content="주사위를 굴려 연구를 먹고, 카오스 카드로 판을 뒤집는 2~4인 과학 파티게임">
+  <meta name="theme-color" content="#16695c">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 첫 화면 -->
+<section id="home" class="screen">
+  <div class="home-card">
+    <p class="home-tape">실험실 출입 주의</p>
+    <h1>과학 연구<br>쟁탈전</h1>
+    <p class="home-sub">연구는 먹는 사람이 임자. 카오스 카드는 판을 뒤집는다.</p>
+
+    <label class="field">
+      <span>닉네임</span>
+      <input id="nick" maxlength="12" placeholder="예: 뉴턴의사과" autocomplete="off">
+    </label>
+
+    <button id="btnCreate" class="btn big primary">방 만들기</button>
+
+    <div class="join-row">
+      <input id="code" maxlength="5" placeholder="방 코드" autocomplete="off" autocapitalize="characters">
+      <button id="btnJoin" class="btn">참가하기</button>
+    </div>
+
+    <p id="netStatus" class="net-status">서버에 연결하는 중…</p>
+
+    <details class="local-box">
+      <summary>인터넷 없이 한 기기로 해보기 (로컬 테스트)</summary>
+      <p>한 화면을 돌려가며 플레이합니다. 처음 한 번은 준비에 몇 초 걸려요.</p>
+      <div class="local-row">
+        <button class="btn" data-local="2">2명</button>
+        <button class="btn" data-local="3">3명</button>
+        <button class="btn" data-local="4">4명</button>
+      </div>
+    </details>
+
+    <button id="btnRules" class="btn ghost">게임 방법</button>
+  </div>
+</section>
+
+<!-- 대기실 -->
+<section id="lobby" class="screen" hidden>
+  <div class="lobby-card">
+    <h2>대기실</h2>
+    <button id="btnCopy" class="code-box" title="눌러서 초대 링크 복사">
+      <span class="code-label">방 코드</span>
+      <strong id="lobbyCode">-----</strong>
+      <span class="code-hint">누르면 초대 링크가 복사돼요</span>
+    </button>
+    <ul id="lobbyPlayers" class="lobby-players"></ul>
+    <p id="lobbyHint" class="lobby-hint"></p>
+    <button id="btnStart" class="btn big primary">게임 시작</button>
+    <button id="btnLeaveLobby" class="btn ghost">방 나가기</button>
+  </div>
+</section>
+
+<!-- 게임 -->
+<section id="game" class="screen" hidden>
+  <header id="top"></header>
+  <div id="scores"></div>
+  <div id="boardWrap">
+    <svg id="board" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="zoomBtns">
+      <button data-zoom="1" aria-label="확대">＋</button>
+      <button data-zoom="-1" aria-label="축소">－</button>
+      <button data-zoom="0" aria-label="전체 보기">⤢</button>
+    </div>
+  </div>
+  <aside id="log" aria-label="게임 기록"></aside>
+  <div id="action"></div>
+  <div id="hand"></div>
+</section>
+
+<div id="banner" hidden></div>
+<div id="toasts" aria-live="polite"></div>
+<div id="modal" hidden></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
